@@ -15,35 +15,35 @@ import (
 )
 
 func migrateParams(ctx sdk.Context, storeKey storetypes.StoreKey, legacySubspace exported.ParamSubspace, cdc codec.BinaryCodec) error {
-	store := ctx.KVStore(storeKey)
-
-	dp := govv1.DepositParams{}
-	vp := govv1.VotingParams{}
-	tp := govv1.TallyParams{}
-	legacySubspace.Get(ctx, govv1.ParamStoreKeyDepositParams, &dp)
-	legacySubspace.Get(ctx, govv1.ParamStoreKeyVotingParams, &vp)
-	legacySubspace.Get(ctx, govv1.ParamStoreKeyTallyParams, &tp)
-
-	defaultParams := govv1.DefaultParams()
-	params := govv1.NewParams(
-		dp.MinDeposit,
-		*dp.MaxDepositPeriod,
-		*vp.VotingPeriod,
-		tp.Quorum,
-		tp.Threshold,
-		tp.VetoThreshold,
-		defaultParams.MinInitialDepositRatio,
-		defaultParams.BurnProposalDepositPrevote,
-		defaultParams.BurnVoteQuorum,
-		defaultParams.BurnVoteVeto,
-	)
-
-	bz, err := cdc.Marshal(&params)
-	if err != nil {
-		return err
-	}
-
-	store.Set(ParamsKey, bz)
+	//store := ctx.KVStore(storeKey)
+	//
+	//dp := govv1.DepositParams{}
+	//vp := govv1.VotingParams{}
+	//tp := govv1.TallyParams{}
+	//legacySubspace.Get(ctx, govv1.ParamStoreKeyDepositParams, &dp)
+	//legacySubspace.Get(ctx, govv1.ParamStoreKeyVotingParams, &vp)
+	//legacySubspace.Get(ctx, govv1.ParamStoreKeyTallyParams, &tp)
+	//
+	//defaultParams := govv1.DefaultParams()
+	//params := govv1.NewParams(
+	//	dp.MinDeposit,
+	//	*dp.MaxDepositPeriod,
+	//	*vp.VotingPeriod,
+	//	tp.Quorum,
+	//	tp.Threshold,
+	//	tp.VetoThreshold,
+	//	defaultParams.MinInitialDepositRatio,
+	//	defaultParams.BurnProposalDepositPrevote,
+	//	defaultParams.BurnVoteQuorum,
+	//	defaultParams.BurnVoteVeto,
+	//)
+	//
+	//bz, err := cdc.Marshal(&params)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//store.Set(ParamsKey, bz)
 
 	return nil
 }
@@ -77,9 +77,9 @@ func migrateProposalVotingPeriod(ctx sdk.Context, storeKey storetypes.StoreKey, 
 // Addition of the new min initial deposit ratio parameter that is set to 0 by default.
 // Proposals in voting period are tracked in a separate index.
 func MigrateStore(ctx sdk.Context, storeKey storetypes.StoreKey, legacySubspace exported.ParamSubspace, cdc codec.BinaryCodec) error {
-	if err := migrateProposalVotingPeriod(ctx, storeKey, cdc); err != nil {
-		return err
-	}
+	//if err := migrateProposalVotingPeriod(ctx, storeKey, cdc); err != nil {
+	//	return err
+	//}
 
 	return migrateParams(ctx, storeKey, legacySubspace, cdc)
 }
